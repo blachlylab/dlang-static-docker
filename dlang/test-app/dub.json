@@ -1,0 +1,24 @@
+{
+	"authors": [
+		"Charles Gregory"
+	],
+	"copyright": "Copyright © 2022, Charles Gregory",
+	"description": "A minimal D application.",
+	"license": "MIT",
+	"name": "test",
+	"configurations":[
+		{
+			"name":"shared",
+			"targetType": "executable"
+		},
+		{
+			"name":"static-alpine",
+			"targetType": "executable",
+			"dflags-ldc": [
+				"-link-defaultlib-shared=false",
+				"-static",
+				"--linker=gold"
+			]
+		}
+	]
+}
