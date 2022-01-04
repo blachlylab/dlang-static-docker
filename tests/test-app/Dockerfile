@@ -1,4 +1,4 @@
-FROM blachlylab/dlang-ldc-static
+FROM charesgregory/dlang-ldc-static
 
 ADD . /home/test-app
 WORKDIR /home/test-app
