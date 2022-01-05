@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: extract
-      - uses: shrink/actions-docker-extract@v1
+        uses: shrink/actions-docker-extract@v1
         id: extract
         with:
           image: charesgregory/dlang-ldc-static-test-app:latest
