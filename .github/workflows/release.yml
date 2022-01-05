@@ -5,14 +5,13 @@ on:
     workflows: ["build test app"]
     types:
       - completed
-  push:
-    tags:
-      - "v*.*.*"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: extract
         uses: shrink/actions-docker-extract@v1
         id: extract
