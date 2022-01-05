@@ -12,10 +12,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Get the version
-        id: get_version
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
 
       - name: extract
         uses: shrink/actions-docker-extract@v1
@@ -30,4 +28,3 @@ jobs:
           files: ${{ steps.extract.outputs.destination }}/test
           generate_release_notes: true
           draft: true
-          tag_name: ${{ steps.get_version.outputs.VERSION }}
