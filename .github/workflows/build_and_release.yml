@@ -30,7 +30,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push dlang image
-        id: docker_build
+        id: docker_build_ldc
         uses: docker/build-push-action@v2
         with:
           context: ./dlang
@@ -39,7 +39,7 @@ jobs:
           tags: charesgregory/dlang-ldc-static:latest,charesgregory/dlang-ldc-static:${{ steps.get_version.outputs.VERSION }}
 
       - name: Build and push test app image
-        id: docker_build
+        id: docker_build_test_app
         uses: docker/build-push-action@v2
         with:
           context: ./tests/test-app
@@ -48,7 +48,7 @@ jobs:
           tags: charesgregory/dlang-ldc-static-test-app:latest,charesgregory/dlang-ldc-static-test-app:${{ steps.get_version.outputs.VERSION }}
 
       - name: Build and push htslib image
-        id: docker_build
+        id: docker_build_htslib
         uses: docker/build-push-action@v2
         with:
           context: ./htslib
