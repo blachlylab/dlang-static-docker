@@ -1,4 +1,4 @@
-name: build test app
+name: build dlang htslib static image
 
 on:
   workflow_run:
@@ -6,14 +6,13 @@ on:
     types:
       - completed
 
-
 jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        
+
       - name: Get the version
         id: get_version
         run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3 | sed 's/^v//')
@@ -34,7 +33,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: ./tests/test-app
-          file: ./tests/test-app/Dockerfile
+          context: ./dlang
+          file: ./dlang/ldc.dockerfile
           push: true
-          tags: charesgregory/dlang-ldc-static-test-app:latest,charesgregory/dlang-ldc-static-test-app:${{ steps.get_version.outputs.VERSION }}
+          tags: charesgregory/dlang-htslib-static:latest,charesgregory/dlang-htslib-static:${{ steps.get_version.outputs.VERSION }}

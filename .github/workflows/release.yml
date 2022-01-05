@@ -1,9 +1,10 @@
 name: release
 
 on:
-  push:
-    tags:
-      - "v*.*.*"
+  workflow_run:
+    workflows: ["build test app"]
+    types:
+      - completed
 
 jobs:
   build:
