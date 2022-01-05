@@ -59,7 +59,11 @@ RUN wget https://github.com/ebiggers/libdeflate/archive/refs/tags/v$DEFLATE_VER.
 Though if the alpine repositories have it in both static and shared forms you may be able to 
 avoid compiling them:
 ```dockerfile
-
+RUN apk add --update --no-cache \
+    autoconf automake make cmake \
+    zlib zlib-dev zlib-static \
+    xz xz-dev \
+    bzip2 bzip2-dev bzip2-static 
 ```
 These libraries also must be installed into locations on the LD_LIBRARY_PATH and LIBRARY_PATH or 
 those environment variables must be altered. These are defined in our images as such:
