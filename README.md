@@ -81,8 +81,8 @@ compiled with `mimalloc`.
 
 ### Docker and Github Actions
 
-If your docker image is uploaded to Dockerhub, you can use the github actions `.github/workflows/build.yml` 
+If your docker image is uploaded to Dockerhub, you can use the github actions `.github/workflows/build_and_release.yml` 
 in this repo to have your docker image built and uploaded to Dockerhub via github actions. You will have to 
-set up a dockerhub API key. The github actions `.github/workflows/release.yml` can pull a docker image from 
-Dockerhub, extract your static binary from it, and create a release draft with the binary attached, just 
+set up a dockerhub API key. The github actions script will also pull the test app docker image from 
+Dockerhub, extract the static binary from it, and create a release draft with the binary attached, just 
 look at our `v0.0.1` [release](https://github.com/blachlylab/dlang-static-docker/releases/tag/v0.0.1).

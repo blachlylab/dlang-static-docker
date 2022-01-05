@@ -1,0 +1,71 @@
+name: build all and release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Get the tag
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3 | sed 's/^v//')
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push dlang image
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./dlang
+          file: ./dlang/ldc.dockerfile
+          push: true
+          tags: charesgregory/dlang-ldc-static:latest,charesgregory/dlang-ldc-static:${{ steps.get_version.outputs.VERSION }}
+
+      - name: Build and push test app image
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./tests/test-app
+          file: ./tests/test-app/Dockerfile
+          push: true
+          tags: charesgregory/dlang-ldc-static-test-app:latest,charesgregory/dlang-ldc-static-test-app:${{ steps.get_version.outputs.VERSION }}
+
+      - name: Build and push htslib image
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./htslib
+          file: ./htslib/Dockerfile
+          push: true
+          tags: charesgregory/dlang-htslib-static:latest,charesgregory/dlang-htslib-static:${{ steps.get_version.outputs.VERSION }}
+
+      - name: extract test app binary
+        uses: shrink/actions-docker-extract@v1
+        id: extract
+        with:
+          image: charesgregory/dlang-ldc-static-test-app:latest
+          path: /home/test-app/test
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{ steps.extract.outputs.destination }}/test
+          generate_release_notes: true
+          draft: true
