@@ -33,7 +33,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: ./dlang
-          file: ./dlang/ldc.dockerfile
+          context: ./htslib
+          file: ./htslib/Dockerfile
           push: true
           tags: charesgregory/dlang-htslib-static:latest,charesgregory/dlang-htslib-static:${{ steps.get_version.outputs.VERSION }}
