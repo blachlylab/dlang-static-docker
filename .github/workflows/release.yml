@@ -19,6 +19,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: ${{ steps.extract.outputs.destination }}
+          files: ${{ steps.extract.outputs.destination }}/test
           generate_release_notes: true
           draft: true
