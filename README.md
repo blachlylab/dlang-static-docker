@@ -90,3 +90,10 @@ in this repo to have your docker image built and uploaded to Dockerhub via githu
 set up a dockerhub API key. The github actions script will also pull the test app docker image from 
 Dockerhub, extract the static binary from it, and create a release draft with the binary attached, just 
 look at our `v0.0.1` [release](https://github.com/blachlylab/dlang-static-docker/releases/tag/v0.0.1).
+
+The docker images built by our github actions are availiable through dockerhub:
+```
+docker pull blachlylab/dlang-ldc-static
+docker pull blachlylab/dlang-htslib-static
+```
+or use with the `FROM` docker syntax.

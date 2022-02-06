@@ -1,4 +1,4 @@
-FROM charesgregory/dlang-ldc-static
+FROM blachlylab/dlang-ldc-static
 
 RUN apk add --update --no-cache \
     autoconf automake make cmake \
